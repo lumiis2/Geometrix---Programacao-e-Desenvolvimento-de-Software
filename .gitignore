@@ -1,0 +1,9 @@
+build/
+*.o
+*.gcno
+*.gcda
+*.in
+main
+main_tests
+.clangd
+sfml-app

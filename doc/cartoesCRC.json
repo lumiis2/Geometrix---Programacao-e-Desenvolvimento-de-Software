@@ -1,0 +1,225 @@
+[
+  {
+    "name": "Serializable",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 3,
+    "responsibilities": [
+      "Interface que os objetos serializáveis devem implementar para serem escritos em um arquivo",
+      "std::string toJSON()",
+      "void fromJSON()",
+      ""
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Object",
+    "superclasses": "Serializable",
+    "subclasses": "Point, Segment, Polygon",
+    "type": 3,
+    "responsibilities": [
+      "Representa um objeto genérico (ponto, segmento ou polígono)",
+      "void draw()",
+      "Polygon getBoundingBox()",
+      "double distance()"
+    ],
+    "collaborators": [
+      "Canvas"
+    ]
+  },
+  {
+    "name": "State",
+    "superclasses": "Serializable",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Armazena o estado global de objetos e escalares definidos",
+      "Responsável por manter o DAG (grafo direcionado acíclico) de dependências entre os objetos criados",
+      "Processa remoções de objetos",
+      "Recomputa os objetos necessários nas mudanças"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Point",
+    "superclasses": "Object",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Representa um ponto no plano",
+      "double x",
+      "double y",
+      "Point operator + (const Point pt)",
+      "Point operator - (const Point pt)",
+      "Point operator * (const int c)",
+      "long long operator * (const pt p)",
+      "long long operator ^ (const pt p)"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Segment",
+    "superclasses": "Object",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Representa um segmento de reta no plano",
+      "Point p",
+      "Point q",
+      "double length()",
+      "double angular_coefficient()",
+      "bool has(Point p)",
+      "bool intersects(Segment s)",
+      "int lattice_points()"
+    ],
+    "collaborators": [
+      "Point"
+    ]
+  },
+  {
+    "name": "Polygon",
+    "superclasses": "Object",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Representa um polígono no plano",
+      "vector<Point> v",
+      "double area()",
+      "double perimter()",
+      "bool has(Point p)",
+      "int lattice_points()",
+      "Polygon operator + (const Polygon& p) // soma de minkowski"
+    ],
+    "collaborators": [
+      "Point"
+    ]
+  },
+  {
+    "name": "Utils",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "long long sarea2(Point p, Point q, Point r)",
+      "long long collinear(Point p, Point q, Point r)",
+      "bool ccw(Point p, Point q, Point r)",
+      "int quad(Point p)",
+      "Polygon convex_hull(vector<Object> objects)",
+      "Polygon bounding_box(vector<Object> objects)"
+    ],
+    "collaborators": [
+      "Point",
+      "Segment",
+      "Polygon",
+      "Canvas"
+    ]
+  },
+  {
+    "name": "Canvas",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "void drawBackground()",
+      "void drawAxis()",
+      "void drawObjects()",
+      "void draw()"
+    ],
+    "collaborators": [
+      "Background",
+      "GeometryUtils",
+      "Point",
+      "Segment",
+      "Polygon"
+    ]
+  },
+  {
+    "name": "Menu",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Criar e exibir graficamente um menu lateral",
+      "Listar objetos criado",
+      "Recebe e processa a entrada do usuário através de comandos",
+      "Exibir a definição de um objeto em texto"
+    ],
+    "collaborators": [
+      "State",
+      "Canvas",
+      "Object"
+    ]
+  },
+  {
+    "name": "FileManager",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Gerencia arquivos no sistema",
+      "Abre e escreve arquivos JSON contendo objetos do programa serializados",
+      "Abre e escreve imagens rasterizadas (png) e vetoriais (svg)"
+    ],
+    "collaborators": [
+      "Canvas",
+      "Menu",
+      "State",
+      "Object"
+    ]
+  },
+  {
+    "name": "Background",
+    "superclasses": "",
+    "subclasses": "GridBackground GraphBackground PolarBackground",
+    "type": 3,
+    "responsibilities": [
+      "Desenha o plano de fundo da aplicação",
+      "Ajusta o desenho do grid de acordo com o viewport e zoom atual"
+    ],
+    "collaborators": [
+      "Canvas"
+    ]
+  },
+  {
+    "name": "GridBackground",
+    "superclasses": "Background",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Desenha um plano de fundo pontilhado"
+    ],
+    "collaborators": [
+      "Canvas"
+    ]
+  },
+  {
+    "name": "GraphBackground",
+    "superclasses": "Background",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Desenha um plano de fundo quadriculado"
+    ],
+    "collaborators": [
+      "Canvas"
+    ]
+  },
+  {
+    "name": "PolarBackground",
+    "superclasses": "Background",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Desenha um plano de fundo radial (cordenadas polares)"
+    ],
+    "collaborators": [
+      "Canvas"
+    ]
+  }
+]
